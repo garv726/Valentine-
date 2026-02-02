@@ -6,81 +6,110 @@
     <title>Be My Valentine?</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #fce4ec;
+            font-family: 'Arial', sans-serif;
+            background-color: #fce4ec;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
-            text-align: center;
             overflow: hidden;
+            text-align: center;
         }
-        img {
-            max-width: 280px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
+
         h1 {
             color: #d81b60;
+            font-size: 2.0rem; /* Slightly smaller for mobile */
+            margin-bottom: 20px;
+            padding: 0 10px;
         }
+
+        img {
+            max-width: 250px; /* Slightly smaller for mobile */
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
         .buttons {
             display: flex;
             gap: 20px;
-            justify-content: center;
         }
+
         button {
-            padding: 12px 25px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
             border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
+            border-radius: 50px;
             cursor: pointer;
         }
+
         #yesBtn {
-            background: #e91e63;
+            background-color: #e91e63;
             color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(233, 30, 99, 0.4);
         }
+
         #noBtn {
-            background: white;
+            background-color: #ffffff;
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: absolute; /* IMPORTANT fix for mobile jumping */
         }
     </style>
 </head>
 <body>
 
-<div>
-    <img id="mainImage" src="ask.gif" alt="Valentine">
-    <h1>Will you be my Valentine Bubu?</h1>
-
-    <div class="buttons">
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
+    <div id="container">
+        <img id="mainImage" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QyZzZ5eW84dG55eW84dG55eW84dG55eW84dG55eW84dG55eS9z/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute Valentine"> 
+        
+        <h1>Will you be my Valentine Bubu?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn" style="position: relative;">No</button>
+        </div>
     </div>
-</div>
 
-<script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const img = document.getElementById("mainImage");
-    const text = document.querySelector("h1");
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainImage = document.getElementById('mainImage');
+        const headerText = document.querySelector('h1');
 
-    function moveNo() {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 100);
-        noBtn.style.position = "absolute";
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    }
+        // This function moves the button
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
 
-    noBtn.addEventListener("mouseover", moveNo);
-    noBtn.addEventListener("touchstart", moveNo);
+        // Move on hover (computer)
+        noBtn.addEventListener('mouseover', moveButton);
+        
+        // Move on touch (phone)
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Stop it from actually clicking
+            moveButton();
+        });
 
-    yesBtn.addEventListener("click", () => {
-        text.innerHTML = "YAY! I knew it ❤️";
-        img.src = "yes.jpg";
-        document.querySelector(".buttons").style.display = "none";
-        document.body.style.background = "#ffc1e3";
-    });
-</script>
-
+        // Click Yes
+        yesBtn.addEventListener('click', () => {
+            headerText.innerHTML = "YAY! I knew it! 🎉";
+            // Replace this link with your 'Happy' image link
+            mainImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2QyZzZ5eW84dG55eW84dG55eW84dG55eW84dG55eS9z/T86i6yDyOYz7J6v9cx/giphy.gif"; 
+            
+            // Hide buttons
+            yesBtn.style.display = 'none';
+            noBtn.style.display = 'none';
+            
+            document.body.style.backgroundColor = "#ffc1e3";
+        });
+    </script>
 </body>
 </html>
